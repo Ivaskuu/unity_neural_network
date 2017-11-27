@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\Assets\scripts\Main.cs" />
      <Compile Include="Assets\Assets\scripts\Network.cs" />
+     <Compile Include="Assets\Assets\scripts\NetworkTools.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity 5.0/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

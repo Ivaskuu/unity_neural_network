@@ -27,14 +27,15 @@ public class Network : MonoBehaviour
         for(int i = 0; i < NETWORK_SIZE; i++)
         {
             this.output[i] = new double[NETWORK_LAYER_SIZES[i]];
-            this.bias[i] = new double[NETWORK_LAYER_SIZES[i]];
+            this.bias[i] = NetworkTools.createRandomDoubleArray(size: NETWORK_SIZE, minValue: 1, maxValue: 1);
 
             if(i > 0) // After the input layer
             {
                 weights[i] = new double[NETWORK_LAYER_SIZES[i]][];
-                for(int j = 0; j < weights[i].Length; j++)
+                for(int j = 0; j < weights[i].Length; j++) // For each neuron in this layer
                 {
-                    weights[i][j] = new double[NETWORK_LAYER_SIZES[i-1]];
+                    // Assign random values to the weights from the previous layer neuron to this one
+                    weights[i][j] = NetworkTools.createRandomDoubleArray(size: NETWORK_LAYER_SIZES[i-1], minValue: -1, maxValue: 1);
                 }
             }
         }
@@ -45,7 +46,7 @@ public class Network : MonoBehaviour
         if(input.Length != INPUT_SIZE) return null;
         
         this.output[0] = input;
-        for (int layer = 0; layer < NETWORK_SIZE; layer++) // For each layer
+        for (int layer = 1; layer < NETWORK_SIZE; layer++) // For each layer except the input one 
         {
             // For each neuron in this layer
             for (int neuron = 0; neuron < NETWORK_LAYER_SIZES[layer]; neuron++)
