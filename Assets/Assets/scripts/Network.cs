@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System; // Math functions
+using UnityEngine; // Print function
 
 public class Network : MonoBehaviour
 {
@@ -37,6 +38,40 @@ public class Network : MonoBehaviour
                 }
             }
         }
+    }
+
+    public double[] calculate(double[] input)
+    {
+        if(input.Length != INPUT_SIZE) return null;
+        
+        this.output[0] = input;
+        for (int layer = 0; layer < NETWORK_SIZE; layer++) // For each layer
+        {
+            // For each neuron in this layer
+            for (int neuron = 0; neuron < NETWORK_LAYER_SIZES[layer]; neuron++)
+            {
+                // [1] Calculate the sum
+                double sum = bias[layer][neuron];
+                for (int prevNeuron = 0; prevNeuron < NETWORK_LAYER_SIZES[layer-1]; prevNeuron++)
+                {
+                    double prevNeuronOutput = output[layer-1][prevNeuron];
+                    double prevNeuronWeight = weights[layer][neuron][prevNeuron];
+
+                    sum += prevNeuronOutput * prevNeuronWeight;
+                }
+
+                // [2] Calculate the activation
+                output[layer][neuron] = sigmoid(neuronOutput: sum);
+            }
+        }
+        
+        return output[NETWORK_SIZE - 1]; // Arrays start at 0
+    }
+
+    // Activation function
+    private double sigmoid(double neuronOutput)
+    {
+        return 1d / (1 + Math.Exp(-neuronOutput));
     }
 
     public void printInfos()
